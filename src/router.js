@@ -1,6 +1,7 @@
 import express from 'express'
-import Todo from './models/Todo.js';
-import mongoose from 'mongoose';
+import mongoose from 'mongoose'
+import Todo from './models/Todo.js'
+import checkId from './middlewares/checkId.js'
 
 const router = express.Router()
 
@@ -18,14 +19,8 @@ router.get('/api/todo', async (req, res) => {
     })
 })
 
-router.get('/api/todo/:id', async (req, res) => {
-    const {id} = req.params;
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(400).json({
-            error: 'Invalid ID format'
-        })
-    }
-
+router.get('/api/todo/:id', checkId, async (req, res) => {
+    const {id} = req.params
     const todoItem = await Todo.findById(id).exec()
     if (!todoItem) {
         return res.status(404).json({
@@ -61,14 +56,8 @@ router.post('/api/todo', async (req, res) => {
     })
 })
 
-router.put('/api/todo/:id', async (req, res) => {
-    const {id} = req.params;
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(400).json({
-            error: 'Invalid ID format'
-        })
-    }
-
+router.put('/api/todo/:id', checkId, async (req, res) => {
+    const {id} = req.params
     const todoItem = await Todo.findById(id).exec()
     if (!todoItem) {
         return res.status(404).json({
@@ -93,13 +82,7 @@ router.put('/api/todo/:id', async (req, res) => {
 })
 
 router.delete('/api/todo/:id', async (req, res) => {
-    const {id} = req.params;
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(400).json({
-            error: 'Invalid ID format'
-        })
-    }
-
+    const {id} = req.params
     const todoItem = await Todo.findById(id).exec()
     if (!todoItem) {
         return res.status(404).json({
