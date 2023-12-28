@@ -1,5 +1,4 @@
 import express from 'express'
-import mongoose from 'mongoose'
 import Todo from './models/Todo.js'
 import checkId from './middlewares/checkId.js'
 
