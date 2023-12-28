@@ -71,7 +71,8 @@ router.put('/api/todo/:id', checkId, async (req, res) => {
         })
     }
 
-    const updateTodoItem = Object.assign(todoItem, {title, check})
+    const updatedAt = new Date().toISOString();
+    const updateTodoItem = Object.assign(todoItem, {title, check, updatedAt})
 
     await Todo.updateOne({_id: id}, updateTodoItem)
 
