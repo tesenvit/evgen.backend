@@ -80,7 +80,7 @@ router.put('/api/todo/:id', checkId, async (req, res) => {
     })
 })
 
-router.delete('/api/todo/:id', async (req, res) => {
+router.delete('/api/todo/:id', checkId, async (req, res) => {
     const {id} = req.params
     const todoItem = await Todo.findById(id).exec()
     if (!todoItem) {
